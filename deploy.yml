@@ -1,16 +1,16 @@
-name: Deploy to Elastic Beanstalk
+name: Deploy to AWS Elastic Beanstalk
 
 on:
   push:
     branches:
-      - main  # Change this to your default branch if different
+      - main  # Change this if your default branch is different
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Checkout Code
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
       - name: Set up AWS Credentials
@@ -20,12 +20,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Install Elastic Beanstalk CLI
-        run: |
-          pip install awsebcli --upgrade
+      - name: Install AWS Elastic Beanstalk CLI
+        run: pip install awsebcli --upgrade
 
       - name: Deploy to Elastic Beanstalk
         run: |
-          eb init ${{ secrets.EB_APPLICATION_NAME }} --platform node.js --region ${{ secrets.AWS_REGION }}
+          eb init ${{ secrets.EB_APPLICATION_NAME }} --platform "Node.js" --region ${{ secrets.AWS_REGION }}
           eb use ${{ secrets.EB_ENV_NAME }}
           eb deploy
