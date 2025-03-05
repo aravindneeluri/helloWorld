@@ -28,3 +28,4 @@ jobs:
           eb init ${{ secrets.EB_APPLICATION_NAME }} --platform "Node.js" --region ${{ secrets.AWS_REGION }}
           eb use ${{ secrets.EB_ENV_NAME }}
           eb deploy
+          
